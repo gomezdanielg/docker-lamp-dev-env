@@ -1,4 +1,4 @@
-FROM php:7.0.6-fpm
+FROM php:7-fpm
 
 RUN curl -s -o /usr/local/bin/composer https://getcomposer.org/composer.phar && \
     chmod 0755 /usr/local/bin/composer
@@ -18,21 +18,6 @@ RUN apt-get update && apt-get install -y \
         libldap2-dev  \
         libpng12-dev \
     && docker-php-ext-install -j$(nproc) iconv mcrypt
-
-RUN apt-get update && apt-get install -y --force-yes \
-        sqlite3 \
-        vim \
-        nodejs \
-        nodejs-dev \
-        npm
-
-# Install gulp and bower with NPM
-RUN npm install -g \
-    gulp \
-    bower
-
-# Add a symbolic link for Node
-RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # Add an alias for PHPUnit
 RUN echo "alias phpunit='./vendor/bin/phpunit'" >> ~/.bashrc
